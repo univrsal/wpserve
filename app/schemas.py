@@ -1,29 +1,25 @@
 from __future__ import annotations
-from typing import List
+
 from pydantic import BaseModel
 
 
-class TagBase(BaseModel):
+class TagOut(BaseModel):
+    id: int
     name: str
 
-
-class TagRead(TagBase):
-    id: int
-
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
-class ImageBase(BaseModel):
-    filename: str
+class ImageOut(BaseModel):
+    id: int
+    file_name: str
+    file_path: str
+    file_size: int
     width: int
     height: int
-    file_size: int
-
-
-class ImageRead(ImageBase):
-    id: int
-    tags: List[TagRead] = []
+    format: str
+    tags: list[TagOut]
 
     class Config:
-        orm_mode = True
+        from_attributes = True

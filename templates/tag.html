@@ -12,9 +12,16 @@
       {% for image in images %}
       <div class="thumb">
         <a href="/image/{{ image.id }}">
-          <img src="/api/raw/{{ image.id }}" alt="{{ image.filename }}" />
+          <img
+            src="/api/thumb/{{ image.id }}"
+            alt="{{ image.filename }}"
+            loading="lazy"
+          />
         </a>
-        <div class="meta">{{ image.width }}x{{ image.height }}</div>
+        <div class="meta">
+          {{ image.width }}x{{ image.height }} | {{ (image.file_size /
+          1024)|round(1) }} KB
+        </div>
       </div>
       {% else %}
       <p><em>No images for this tag.</em></p>

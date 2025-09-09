@@ -13,6 +13,7 @@ from app.schemas import ImageRead, TagRead
 router = APIRouter()
 
 IMAGE_DIR = Path("static/images")
+THUMB_DIR = Path("static/thumbs")
 
 
 @router.get("/images", response_model=List[ImageRead])
@@ -36,6 +37,21 @@ def raw_image(image_id: int, db: Session = Depends(get_db)):
     file_path = IMAGE_DIR / image.filename
     if not file_path.exists():
         raise HTTPException(status_code=404, detail="File not found on disk")
+    return FileResponse(str(file_path))
+
+
+@router.get("/thumb/{image_id}")
+def thumb_image(image_id: int, db: Session = Depends(get_db)):
+    image = db.query(Image).filter(Image.id == image_id).first()
+    if not image:
+        raise HTTPException(status_code=404, detail="Image not found")
+    file_path = THUMB_DIR / image.filename
+    if not file_path.exists():
+        # Fallback to raw image
+        orig = IMAGE_DIR / image.filename
+        if not orig.exists():
+            raise HTTPException(status_code=404, detail="File not found on disk")
+        return FileResponse(str(orig))
     return FileResponse(str(file_path))
 
 

@@ -1,5 +1,7 @@
 *.db
 static/images/*
+static/thumbs/*
 !static/images/.keep
+!static/thumbs/.keep
 .venv/
 __pycache__/

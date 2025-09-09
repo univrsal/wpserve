@@ -5,9 +5,20 @@
     <title>{{ image.filename }}</title>
     <link rel="stylesheet" href="/static/css/style.css" />
     <style>
+      /* Ensure image fits within viewport height while still shrinking for narrow screens */
       img.full {
         max-width: 100%;
+        max-height: 90vh; /* leave some room for header / margins */
+        width: auto; /* prevent forced stretch horizontally when height-constrained */
         height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      body {
+        margin: 0 0 2rem 0;
+      }
+      .image-container {
+        padding: 0 1rem;
       }
     </style>
   </head>
@@ -16,19 +27,16 @@
       <a href="/">All Tags</a> | {% for tag in image.tags %}<a
         href="/tag/{{ tag.id }}"
         >{{ tag.name }}</a
-      >{% if not loop.last %}, {% endif %}{% endfor %}
+      >{% if not loop.last %}, {% endif %}{% endfor %} | Resolution: {{
+      image.width }}x{{ image.height }} | File size: {{ (image.file_size /
+      1024)|round(1) }} KB
     </p>
-    <h1>{{ image.filename }}</h1>
-    <p>
-      Resolution: {{ image.width }}x{{ image.height }} | File size: {{
-      (image.file_size / 1024)|round(1) }} KB
-    </p>
-    <p>
+    <div class="image-container">
       <img
         class="full"
         src="/api/raw/{{ image.id }}"
         alt="{{ image.filename }}"
       />
-    </p>
+    </div>
   </body>
 </html>

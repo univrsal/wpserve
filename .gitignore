@@ -5,3 +5,4 @@ static/thumbs/*
 !static/thumbs/.keep
 .venv/
 __pycache__/
+meta/

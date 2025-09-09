@@ -78,6 +78,9 @@ def import_data(
     imported = skipped = 0
     try:
         for img_id, file_path, file_name, file_size, width, height in rows:
+            tags = image_tags.get(img_id, [])
+            if "v" not in tags:
+                continue
             ext = Path(file_name).suffix.lower()
             if ext not in SUPPORTED_EXT:
                 if verbose:
@@ -119,6 +122,8 @@ def import_data(
                         dest_file if dest_file.exists() else src_path
                     ) as im:
                         im.thumbnail((480, 270))
+                        if im.mode in ("RGBA", "LA"):
+                            im = im.convert("RGB")
                         thumb_mode = "JPEG"
                         save_kwargs = {"quality": 80}
                         im.save(dest_thumb_file, thumb_mode, **save_kwargs)

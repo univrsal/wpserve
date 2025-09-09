@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ image.filename }}</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <style>
+      img.full {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <a href="/">All Tags</a> | {% for tag in image.tags %}<a
+        href="/tag/{{ tag.id }}"
+        >{{ tag.name }}</a
+      >{% if not loop.last %}, {% endif %}{% endfor %}
+    </p>
+    <h1>{{ image.filename }}</h1>
+    <p>
+      Resolution: {{ image.width }}x{{ image.height }} | File size: {{
+      (image.file_size / 1024)|round(1) }} KB
+    </p>
+    <p>
+      <img
+        class="full"
+        src="/api/raw/{{ image.id }}"
+        alt="{{ image.filename }}"
+      />
+    </p>
+  </body>
+</html>

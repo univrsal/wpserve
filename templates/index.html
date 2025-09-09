@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Image Browser - Tags</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <h1>All Tags</h1>
+    <p>Total images: {{ total_images }}</p>
+    <ul>
+      {% for tag in tags %}
+      <li>
+        <a href="/tag/{{ tag.id }}">{{ tag.name }} ({{ tag.images|length }})</a>
+      </li>
+      {% else %}
+      <li><em>No tags yet.</em></li>
+      {% endfor %}
+    </ul>
+    <hr />
+    <p><a href="/api/images">API: All Images (JSON)</a></p>
+  </body>
+</html>

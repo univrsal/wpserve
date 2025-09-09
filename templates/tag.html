@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tag: {{ tag.name }}</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <h1>Tag: {{ tag.name }}</h1>
+    <p><a href="/">Back to tags</a></p>
+    <div class="grid">
+      {% for image in images %}
+      <div class="thumb">
+        <a href="/image/{{ image.id }}">
+          <img src="/api/raw/{{ image.id }}" alt="{{ image.filename }}" />
+        </a>
+        <div class="meta">{{ image.width }}x{{ image.height }}</div>
+      </div>
+      {% else %}
+      <p><em>No images for this tag.</em></p>
+      {% endfor %}
+    </div>
+  </body>
+</html>

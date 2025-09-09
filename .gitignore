@@ -1,0 +1,5 @@
+*.db
+static/images/*
+!static/images/.keep
+.venv/
+__pycache__/
